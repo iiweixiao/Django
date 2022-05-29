@@ -33,3 +33,7 @@ def depart_edit(request, nid):
     title = request.POST.get('title')
     models.Department.objects.filter(id=nid).update(title=title)
     return redirect('/depart/list')
+
+
+def user_list(request):
+    return render(request, 'user_list.html')
