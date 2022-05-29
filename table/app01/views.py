@@ -27,9 +27,5 @@ def depart_delete(request):
 
 def depart_edit(request, nid):
     """ 编辑部门 """
-    if request.method == 'GET':
-        row_object = models.Department.objects.filter(id=nid).first()
-        return render(request, 'depart_edit.html', {'row_object': row_object})
-    title = request.POST.get('title')
-    models.Department.objects.filter(id=nid).update(title=title)
-    return redirect('/depart/list')
+    row_object = models.Department.objects.filter(id=nid).first()
+    return render(request, 'depart_edit.html', {'row_object': row_object})
