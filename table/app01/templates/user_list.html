@@ -3,17 +3,17 @@
 {% block content %}
 <div class="container">
     <div style="margin-bottom: 10px">
-        {# <a class="btn btn-success" href="/depart/add/" target="_blank">#}
-        <a class="btn btn-success" href="/depart/add/">
+        {# <a class="btn btn-success" href="#" target="_blank">#}
+        <a class="btn btn-success" href="#">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-            新建部门
+            新建员工
         </a>
     </div>
     <div class="panel panel-default">
         <!-- Default panel contents -->
         <div class="panel-heading">
             <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-            部门列表
+            员工列表
         </div>
 
         <!-- Table -->
@@ -21,18 +21,28 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>部门名称</th>
-                <th>操作</th>
+                <th>姓名</th>
+                <th>密码</th>
+                <th>年龄</th>
+                <th>余额</th>
+                <th>入职时间</th>
+                <th>性别</th>
+                <th>所属部门</th>
             </tr>
             </thead>
             <tbody>
             {% for obj in queryset %}
             <tr>
                 <th scope="row">{{ obj.id }}</th>
-                <td>{{ obj.title }}</td>
+                <td>{{ obj.name }}</td>
+                <td>{{ obj.password }}</td>
+                <td>{{ obj.age }}</td>
+                <td>{{ obj.account }}</td>
+                <td>{{ obj.create_time|date:"Y-m-d" }}</td>
+                <td>{{ obj.get_gender_display }}</td>
                 <td>
-                    <a class="btn btn-primary btn-xs" href="/depart/{{ obj.id }}/edit">编辑</a>
-                    <a class="btn btn-danger btn-xs" href="/depart/delete/?nid={{ obj.id }}">删除</a>
+                    <a class="btn btn-primary btn-xs" href="#">编辑</a>
+                    <a class="btn btn-danger btn-xs" href="#">删除</a>
                 </td>
             </tr>
             {% endfor %}
@@ -41,3 +51,6 @@
     </div>
 </div>
 {% endblock %}
+
+
+

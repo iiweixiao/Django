@@ -33,3 +33,17 @@ def depart_edit(request, nid):
     title = request.POST.get('title')
     models.Department.objects.filter(id=nid).update(title=title)
     return redirect('/depart/list')
+
+
+def user_list(request):
+    """ 员工管理 """
+    queryset = models.UserInfo.objects.all()
+
+    """
+    # 用python语法完成员工信息的查询
+    # queryset = models.UserInfo.objects.all()
+    # for obj in queryset:
+    #     print(obj.id, obj.name, obj.password, obj.age, obj.account, obj.create_time.strftime("%Y-%m-%d"),
+    #           obj.get_gender_display(), obj.depart.title)
+    """
+    return render(request, 'user_list.html', {'queryset': queryset})
