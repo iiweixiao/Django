@@ -3,7 +3,6 @@
 {% block content %}
 <div class="container">
     <div style="margin-bottom: 10px">
-        {# <a class="btn btn-success" href="#" target="_blank">#}
         <a class="btn btn-success" href="#">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
             新建员工
@@ -28,9 +27,11 @@
                 <th>入职时间</th>
                 <th>性别</th>
                 <th>所属部门</th>
+                <th>操作</th>
             </tr>
             </thead>
             <tbody>
+
             {% for obj in queryset %}
             <tr>
                 <th scope="row">{{ obj.id }}</th>
@@ -40,6 +41,7 @@
                 <td>{{ obj.account }}</td>
                 <td>{{ obj.create_time|date:"Y-m-d" }}</td>
                 <td>{{ obj.get_gender_display }}</td>
+                <td>{{ obj.depart.title }}</td>
                 <td>
                     <a class="btn btn-primary btn-xs" href="#">编辑</a>
                     <a class="btn btn-danger btn-xs" href="#">删除</a>
