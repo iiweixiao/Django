@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from app01 import models
 
 
@@ -15,4 +15,17 @@ def depart_add(request):
     title = request.POST.get('title')
 
     models.Department.objects.create(title=title)
+    return redirect('/depart/list')
 
+
+def depart_delete(request):
+    """ 删除部门 """
+    nid = request.GET.get('nid')
+    models.Department.objects.filter(id=nid).delete()
+    return redirect('/depart/list')
+
+
+def depart_edit(request, nid):
+    """ 编辑部门 """
+    row_object = models.Department.objects.filter(id=nid).first()
+    return render(request, 'depart_edit.html', {'row_object': row_object})
