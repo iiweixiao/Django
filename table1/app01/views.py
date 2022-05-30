@@ -3,14 +3,18 @@ from app01 import models
 
 from django import forms
 
+from django.core.validators import RegexValidator
+from django.core.validators import ValidationError
+
 
 def depart_list(request):
+    """ 部门列表 """
     queryset = models.Department.objects.all()
-
     return render(request, 'depart_list.html', {'queryset': queryset})
 
 
 def depart_add(request):
+    """ 新建部门 """
     if request.method == 'GET':
         return render(request, 'depart_add.html')
     title = request.POST.get('title')
@@ -19,12 +23,14 @@ def depart_add(request):
 
 
 def depart_delete(request):
+    """ 删除部门 """
     nid = request.GET.get('nid')
     models.Department.objects.filter(id=nid).delete()
     return redirect('/depart/list/')
 
 
 def depart_edit(request, nid):
+    """ 编辑部门 """
     if request.method == 'GET':
         row_object = models.Department.objects.filter(id=nid).first()
         return render(request, 'depart_edit.html', {'row_object': row_object})
@@ -34,20 +40,25 @@ def depart_edit(request, nid):
 
 
 def user_list(request):
+    """ 人员列表 """
     queryset = models.UserInfo.objects.all()
     return render(request, 'user_list.html', {'queryset': queryset})
 
 
 class UserModelForm(forms.ModelForm):
+    """ 校验名字长度 """
     name = forms.CharField(min_length=3, label='用户名')
 
     class Meta:
         model = models.UserInfo
+        # 新增人员时显示的字段
         fields = ['name', 'password', 'age', 'account', 'create_time', 'gender', 'depart']
+        # 给输入框添加样式，方法1
         # widgets = {
         #     'name': forms.TextInput(attrs={'class': 'form-control'})
         # }
 
+    # 给输入框添加样式，方法2
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # 循环找到所有的插件，添加了class="form-control"
@@ -70,7 +81,7 @@ def user_add(request):
         form.save()
         return redirect('/user/list/')
 
-    # 校验失败（在页面上显示错误信息
+    # 校验失败（在页面上显示错误信息）
     return render(request, 'user_add.html', {'form': form})
 
 
@@ -93,6 +104,7 @@ def user_edit(request, nid):
 
 
 def user_delete(request, nid):
+    """ 删除用户 """
     models.UserInfo.objects.filter(id=nid).delete()
     return redirect('/user/list/')
 
@@ -104,11 +116,8 @@ def pretty_list(request):
     return render(request, 'pretty_list.html', {'queryset': queryset})
 
 
-from django.core.validators import RegexValidator
-from django.core.validators import ValidationError
-
-
 class PrettyModelForm(forms.ModelForm):
+    """ 校验手机号，确保新增的手机号不存在 """
     # 验证：方式1 字段+正则方法
     mobile = forms.CharField(
         label='手机号',
@@ -159,6 +168,7 @@ def pretty_add(request):
 
 
 class PrettyEditModelForm(forms.ModelForm):
+    """ 校验手机号，确保编辑完的手机号除自身外不存在 """
     # mobile = forms.CharField(disabled=True, label='手机号')
     mobile = forms.CharField(
         label='手机号',
@@ -204,5 +214,6 @@ def pretty_edit(request, nid):
 
 
 def pretty_delete(request, nid):
+    """ 删除靓号 """
     models.PrettyNum.objects.filter(id=nid).delete()
     return redirect('/pretty/list/')
