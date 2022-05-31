@@ -6,11 +6,18 @@ from django import forms
 from django.core.validators import RegexValidator
 from django.core.validators import ValidationError
 
+from app01.utils.pagination import Pagination
+
 
 def depart_list(request):
     """ 部门列表 """
     queryset = models.Department.objects.all()
-    return render(request, 'depart_list.html', {'queryset': queryset})
+    page_object = Pagination(request, queryset)
+    context = {
+        'queryset': page_object.page_queryset,
+        'page_string': page_object.html(),
+    }
+    return render(request, 'depart_list.html', context)
 
 
 def depart_add(request):
@@ -42,7 +49,13 @@ def depart_edit(request, nid):
 def user_list(request):
     """ 人员列表 """
     queryset = models.UserInfo.objects.all()
-    return render(request, 'user_list.html', {'queryset': queryset})
+
+    page_object = Pagination(request, queryset, page_size=2, plus=1)
+    context = {
+        'queryset': page_object.page_queryset,  # 人员列表
+        'page_string': page_object.html(),  # 分页参数
+    }
+    return render(request, 'user_list.html', context)
 
 
 class UserModelForm(forms.ModelForm):
@@ -113,7 +126,13 @@ def pretty_list(request):
     """ 靓号列表 """
     # select * from 表 order by level desc;  升序asc降序dsc
     queryset = models.PrettyNum.objects.all().order_by('-level')
-    return render(request, 'pretty_list.html', {'queryset': queryset})
+
+    page_object = Pagination(request, queryset, page_size=1)
+    context = {
+        'queryset': page_object.page_queryset,  # 人员列表
+        'page_string': page_object.html(),  # 分页参数
+    }
+    return render(request, 'pretty_list.html', context)
 
 
 class PrettyModelForm(forms.ModelForm):
