@@ -6,11 +6,12 @@ from django.core.validators import RegexValidator
 from django.core.validators import ValidationError
 
 from app01.utils.bootstrap import BootStrapModelForm
+from app01.utils.encrypt import md5
 
 
 class UserModelForm(BootStrapModelForm):
     """ 校验名字长度 """
-    name = forms.CharField(min_length=3, label='用户名')
+    name = forms.CharField(min_length=2, max_length=4, label='用户名')
 
     class Meta:
         model = models.UserInfo
@@ -77,3 +78,32 @@ class PrettyEditModelForm(forms.ModelForm):
         if exists:
             raise ValidationError('手机号已存在')
         return txt_mobile
+
+
+class AdminModelForm(BootStrapModelForm):
+    """ 校验名字长度 """
+    confirm_password = forms.CharField(
+        label='确认密码',
+        widget=forms.PasswordInput(render_value=True),
+    )
+
+    class Meta:
+        model = models.Admin
+        # 新增管理员时显示的字段
+        fields = ['username', 'password', 'confirm_password']
+        widgets = {
+            'password': forms.PasswordInput(render_value=True),
+        }
+
+    def clean_password(self):
+        pwd = self.cleaned_data.get('password')
+        return md5(pwd)
+
+    def clean_confirm_password(self):
+        print(self.cleaned_data)
+        # 比较两遍密码
+        pwd = self.cleaned_data.get('password')
+        confirm = md5(self.cleaned_data.get('confirm_password'))
+        if confirm != pwd:
+            raise ValidationError('密码不一致')
+        return confirm
