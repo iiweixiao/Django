@@ -124,13 +124,22 @@ def user_delete(request, nid):
 
 def pretty_list(request):
     """ 靓号列表 """
+    data_dict = {}
+    search_data = request.GET.get('q', '')
+    if search_data:
+    # q = models.PrettyNum.objects.filter(mobile__contains='99')
+    # q = models.PrettyNum.objects.filter(mobile='14119991111')
+        data_dict = {'mobile__contains': search_data}
+    # q2 = models.PrettyNum.objects.filter(**data_dict)
+    # print(q2)
     # select * from 表 order by level desc;  升序asc降序dsc
-    queryset = models.PrettyNum.objects.all().order_by('-level')
+    queryset = models.PrettyNum.objects.filter(**data_dict).order_by('-level')
 
-    page_object = Pagination(request, queryset, page_size=1)
+    page_object = Pagination(request, queryset, page_size=10)
     context = {
         'queryset': page_object.page_queryset,  # 人员列表
         'page_string': page_object.html(),  # 分页参数
+        'search_data': search_data,
     }
     return render(request, 'pretty_list.html', context)
 
