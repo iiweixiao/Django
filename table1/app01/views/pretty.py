@@ -9,10 +9,10 @@ from app01.utils.form import PrettyModelForm, PrettyEditModelForm
 def pretty_list(request):
     """ 靓号列表 """
     data_dict = {}
+    # <input type="text" name="q" class="form-control" placeholder="Search for..." value="{{ search_data }}">
+    # 提取pretty_list.html搜索框输入的值，没有返回'',并将值传给search_data
     search_data = request.GET.get('q', '')
     if search_data:
-        # q = models.PrettyNum.objects.filter(mobile__contains='99')
-        # q = models.PrettyNum.objects.filter(mobile='14119991111')
         data_dict = {'mobile__contains': search_data}
     # q2 = models.PrettyNum.objects.filter(**data_dict)
     # print(q2)

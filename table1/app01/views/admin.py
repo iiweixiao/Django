@@ -13,7 +13,7 @@ def admin_list(request):
     if search_data:
         data_dict = {'username__contains': search_data}
     queryset = models.Admin.objects.filter(**data_dict).order_by('username')
-    page_object = Pagination(request, queryset, page_size=2)
+    page_object = Pagination(request, queryset, page_size=5)
     context = {
         'queryset': page_object.page_queryset,
         'page_string': page_object.html(),
