@@ -40,6 +40,7 @@ urlpatterns = [
     path('admin/<int:nid>/edit/', admin.admin_edit),
     path('admin/<int:nid>/delete/', admin.admin_delete),
     path('admin/<int:nid>/reset/', admin.admin_reset),
-    # 登录
+    # 登录、注销
     path('login/', account.login),
+    path('logout/', account.logout),
 ]

@@ -14,6 +14,9 @@ def admin_list(request):
     # if not info:
     #     return redirect('/login/')
     # 以上用中间件处理
+    info_dict = request.session['info']
+    print(info_dict['id'])
+    print(info_dict['name'])
 
     # 构造搜索
     data_dict = {}
