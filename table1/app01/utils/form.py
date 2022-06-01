@@ -108,3 +108,38 @@ class AdminModelForm(BootStrapModelForm):
         if confirm != pwd:
             raise ValidationError('密码不一致')
         return confirm
+
+
+class AdminResetModelForm(BootStrapModelForm):
+    """ 重置密码 """
+    confirm_password = forms.CharField(
+        label='确认密码',
+        widget=forms.PasswordInput(render_value=True),
+    )
+
+    class Meta:
+        model = models.Admin
+        # 重置密码时显示的字段
+        fields = ['password', 'confirm_password']
+        widgets = {
+            'password': forms.PasswordInput(render_value=True),
+        }
+
+    # 用md5给密码加密
+    def clean_password(self):
+        pwd = self.cleaned_data.get('password')
+        md5_pwd = md5(pwd)
+
+        exists = models.Admin.objects.filter(id=self.instance.pk, password=md5_pwd).exists()
+        if exists:
+            raise ValidationError('不能与以前的密码相同')
+        return md5_pwd
+
+    def clean_confirm_password(self):
+        print(self.cleaned_data)
+        # 比较两遍密码
+        pwd = self.cleaned_data.get('password')
+        confirm = md5(self.cleaned_data.get('confirm_password'))
+        if confirm != pwd:
+            raise ValidationError('密码不一致')
+        return confirm
