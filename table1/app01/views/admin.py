@@ -8,6 +8,14 @@ from app01.utils.form import AdminModelForm, AdminResetModelForm
 
 def admin_list(request):
     """ 管理员列表 """
+    # 检查用户是否已经登录，即检查session中有没有info值
+    # request.session['info'] --> {'id': 11, 'name': 'aaa'}
+    # info = request.session.get('info')
+    # if not info:
+    #     return redirect('/login/')
+    # 以上用中间件处理
+
+    # 构造搜索
     data_dict = {}
     search_data = request.GET.get('q', '')
     if search_data:

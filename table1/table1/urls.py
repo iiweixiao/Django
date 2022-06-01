@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.urls import path
 
-from app01.views import depart, pretty, user, admin
+from app01.views import depart, pretty, user, admin, account
 
 urlpatterns = [
     # 如果发起了前面的url请求，则执行后面的函数
@@ -40,4 +40,6 @@ urlpatterns = [
     path('admin/<int:nid>/edit/', admin.admin_edit),
     path('admin/<int:nid>/delete/', admin.admin_delete),
     path('admin/<int:nid>/reset/', admin.admin_reset),
+    # 登录
+    path('login/', account.login),
 ]
