@@ -44,8 +44,8 @@
                         <td>{{ obj.username }}</td>
                         <td>******</td>
                         <td>
-                            <a class="btn btn-primary btn-xs" href="#">编辑</a>
-                            <a class="btn btn-danger btn-xs" href="#">删除</a>
+                            <a class="btn btn-primary btn-xs" href="/admin/{{ obj.id }}/edit/">编辑</a>
+                            <a class="btn btn-danger btn-xs" href="/admin/{{ obj.id }}/delete/">删除</a>
                         </td>
                     </tr>
                 {% endfor %}

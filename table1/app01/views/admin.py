@@ -38,37 +38,30 @@ def admin_add(request):
     return render(request, 'change.html', {'form': form, 'title': title})
 
 
+def admin_edit(request, nid):
+    """ 编辑管理员 """
+    row_object = models.Admin.objects.filter(id=nid).first()
+    if not row_object:
+        return redirect('/admin/list/')
+
+    title = '编辑管理员'
+    if request.method == 'GET':
+        form = AdminModelForm(instance=row_object)
+        return render(request, 'change.html', {'form': form, 'title': title})
+
+    form = AdminModelForm(data=request.POST, instance=row_object)
+    if form.is_valid():
+        form.save()
+        return redirect('/admin/list/')
+
+    return render(request, 'change.html', {'form': form, 'title': title})
 
 
-    # if request.method == 'GET':
-    #     return render(request, 'admin_add.html')
-    # username = request.POST.get('username')
-    # models.Admin.objects.create(username=username)
-    # return redirect('/admin/list/')
-    #
-    # if request.method == 'GET':
-    #     form = AdminModelForm()
-    #     return render(request, 'pretty_add.html', {'form': form})
-    # form = PrettyModelForm(data=request.POST)
-    # if form.is_valid():
-    #     form.save()
-    #     return redirect('/pretty/list/')
-    # return render(request, 'pretty_add.html', {'form': form})
+def admin_delete(request, nid):
+    """ 删除管理员 """
+    models.Admin.objects.filter(id=nid).delete()
+    return redirect('/admin/list/')
 
-#
-#
-# def admin_delete(request):
-#     """ 删除部门 """
-#     nid = request.GET.get('nid')
-#     models.Department.objects.filter(id=nid).delete()
-#     return redirect('/depart/list/')
-#
-#
-# def admin_edit(request, nid):
-#     """ 编辑部门 """
-#     if request.method == 'GET':
-#         row_object = models.Department.objects.filter(id=nid).first()
-#         return render(request, 'depart_edit.html', {'row_object': row_object})
-#     title = request.POST.get('title')
-#     models.Department.objects.filter(id=nid).update(title=title)
-#     return redirect('/depart/list/')
+
+def admin_reset(request, nid):
+    pass

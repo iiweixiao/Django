@@ -95,6 +95,7 @@ class AdminModelForm(BootStrapModelForm):
             'password': forms.PasswordInput(render_value=True),
         }
 
+    # 用md5给密码加密
     def clean_password(self):
         pwd = self.cleaned_data.get('password')
         return md5(pwd)

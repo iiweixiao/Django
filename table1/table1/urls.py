@@ -18,7 +18,7 @@ from django.urls import path
 from app01.views import depart, pretty, user, admin
 
 urlpatterns = [
-    # 如果执行了前面的url，则执行后面的函数
+    # 如果发起了前面的url请求，则执行后面的函数
     # 部门列表及增删改功能
     path('depart/list/', depart.depart_list),
     path('depart/add/', depart.depart_add),
@@ -37,5 +37,7 @@ urlpatterns = [
     # 管理员的管理
     path('admin/list/', admin.admin_list),
     path('admin/add/', admin.admin_add),
-
+    path('admin/<int:nid>/edit/', admin.admin_edit),
+    path('admin/<int:nid>/delete/', admin.admin_delete),
+    path('admin/<int:nid>/reset/', admin.admin_reset),
 ]
