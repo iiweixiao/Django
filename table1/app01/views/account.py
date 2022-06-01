@@ -90,8 +90,6 @@ def login(request):
     return render(request, 'login.html', {'form': form})
 
 
-
-
 def image_code(request):
     """ 动态验证码 """
 
