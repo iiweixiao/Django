@@ -5,7 +5,7 @@ from django.urls import reverse
 
 
 # Create your models here.
-class Post():
+class Post(models.Model):
     # 帖子状态选项，后面会用到
     STATUS_CHOICES = (
         ('draft', 'Draft'),
