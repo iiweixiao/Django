@@ -84,9 +84,9 @@ WSGI_APPLICATION = 'table1.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tb1',  # 数据库名字
+        'NAME': 'tb01',  # 数据库名字
         'USER': 'root',
-        'PASSWORD': '12345678',
+        'PASSWORD': '123456789',
         'HOST': '127.0.0.1',  # 那台机器安装了MySQL
         'PORT': 3306,
     }
