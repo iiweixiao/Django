@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.urls import path
 
-from app01.views import depart, pretty, user, admin, account
+from app01.views import depart, pretty, user, admin, account, task
 
 urlpatterns = [
     # 如果发起了前面的url请求，则执行后面的函数
@@ -44,4 +44,7 @@ urlpatterns = [
     path('login/', account.login),
     path('logout/', account.logout),
     path('image/code/', account.image_code),
+    # 任务管理
+    path('task/list/', task.task_list),
+    path('task/ajax/', task.task_ajax),
 ]
