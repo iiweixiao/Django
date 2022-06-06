@@ -50,4 +50,5 @@ urlpatterns = [
     path('task/add/', task.task_add),
     # 订单管理
     path('order/list/', order.order_list),
+    path('order/add/', order.order_add),
 ]
