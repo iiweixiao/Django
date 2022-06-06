@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from app01 import models
 from app01.utils.bootstrap import BootStrapModelForm
-
+from app01.utils.pagination import Pagination
 
 class TaskModelForm(BootStrapModelForm):
     class Meta:
@@ -21,8 +21,17 @@ class TaskModelForm(BootStrapModelForm):
 
 def task_list(request):
     """ 任务列表 """
+
+    queryset = models.Task.objects.all().order_by('-id')
+    page_object = Pagination(request, queryset)
+
     form = TaskModelForm()
-    return render(request, 'task_list.html', {'form': form})
+    context = {
+        'form': form,
+        'queryset': page_object.page_queryset,
+        'page_string': page_object.html()
+    }
+    return render(request, 'task_list.html', context)
 
 
 @csrf_exempt
@@ -46,5 +55,5 @@ def task_add(request):
         data_dict = {"status": True, "errors": form.errors}
         return HttpResponse(json.dumps(data_dict))
 
-    data_dict = {"status": True, "error": form.errors}
+    data_dict = {"status": False, "error": form.errors}
     return HttpResponse(json.dumps(data_dict))
