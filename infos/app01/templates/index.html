@@ -70,10 +70,13 @@
         <div>搜狗资讯</div>
     </div>
     <!-- 搜索框 -->
-    <div style="width: 400px;">
+    <div style="width: 700px;">
         <form method="get">
             <div class="input-group">
-                <input type="text" name="k" class="form-control" placeholder="输入关键词，以逗号分开">
+                <input type="text" name="k" class="form-control" placeholder="输入关键词，以逗号分开"
+                       style="float:left;display: inline-block;width: 480px;">
+                <input type="text" name="p" class="form-control" placeholder="爬取几页"
+                       style="float:left;display: inline-block;width: 80px;">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="submit">
                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
@@ -81,7 +84,7 @@
                 </span>
             </div><!-- /input-group -->
         </form>
-</div><!-- /.col-lg-6 -->
+    </div><!-- /.col-lg-6 -->
 
     {# 表格 #}
     <div>
@@ -105,6 +108,7 @@
             {% endfor %}
             </tbody>
         </table>
+
     </div>
 
 
