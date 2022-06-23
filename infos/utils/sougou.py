@@ -1,10 +1,9 @@
 import requests
 from lxml import etree
-# from s_email import send_email
+import json
 
-# key_words = ['一建', '一级建造师']
-key_words = ['电动车', '新能源']
-info = '资讯_from搜狗搜索'
+
+# from s_email import send_email
 
 
 def sougou(key_words):
@@ -23,29 +22,39 @@ def sougou(key_words):
         html = etree.HTML(resp.text)
 
         div_list = html.xpath('//*[@class="vrwrap"]')
-        for i in div_list:
-            title = i.xpath('./div/h3/a//text()')  # 拿到a标签及a标签内em标签的文字，['2022年报考','一建',',哪些地区需要社保?']
-            title = ''.join(title)  # 合并文字
-            href = i.xpath('./div/h3/a/@href')[0]
-            href = 'https://www.sogou.com' + href
-            source_from = i.xpath('./div/div//div/p/span[1]/text()')[0]
-            created = i.xpath('./div/div//div/p/span[2]/text()')[0]
-            print(title, source_from, created, href)
-            content += f"{index} <a href='{href}'>{title}</a> <br>{source_from} {created} <br> <br>"
+        with open('sougouNews.json', 'w', encoding='utf-8') as f:
+            json_data = {}
+            json_data['keywords'] = key_words
 
-            html_data = {}
-            html_data['index'] = index
-            html_data['title'] = title
-            html_data['href'] = href
-            html_data['source_from'] = source_from
-            html_data['created'] = created
-            html_query.append(html_data)
-            index += 1
+            for i in div_list:
+                title = i.xpath('./div/h3/a//text()')  # 拿到a标签及a标签内em标签的文字，['2022年报考','一建',',哪些地区需要社保?']
+                title = ''.join(title)  # 合并文字
+                href = i.xpath('./div/h3/a/@href')[0]
+                href = 'https://www.sogou.com' + href
+                source_from = i.xpath('./div/div//div/p/span[1]/text()')[0]
+                created = i.xpath('./div/div//div/p/span[2]/text()')[0]
+                print(title, source_from, created, href)
+                content += f"{index} <a href='{href}'>{title}</a> <br>{source_from} {created} <br> <br>"
+                html_data = {}
+                html_data['index'] = index
+                html_data['title'] = title
+                html_data['href'] = href
+                html_data['source_from'] = source_from
+                html_data['created'] = created
+                html_query.append(html_data)
+                index += 1
+            json_data['list'] = html_query
+            print(json_data)
+            json.dump(json_data, f, ensure_ascii=False)
+
     return content, html_query
 
 
 if __name__ == '__main__':
-    pass
+    # key_words = ['一建', '一级建造师']
+    key_words = ['电动车', '新能源']
+    info = '资讯_from搜狗搜索'
+    sougou(key_words)
     # send_email('weixiaot2021@icloud.com', sougou(key_words), info)
     # send_email('gaoming595@sina.com', sougou(key_words), info)
     # send_email('iiweixiao@yeah.net', sougou(key_words), info)
