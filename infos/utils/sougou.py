@@ -2,6 +2,8 @@ import requests
 from lxml import etree
 import time
 import random
+
+from app01.models import SougouNewsInfo
 # from s_email import send_email
 
 # key_words = ['一建', '一级建造师']
@@ -46,6 +48,7 @@ def sougou(key_words, page=1):
                     source_from = ' '
                     created = ' '
                 print(index, title, source_from, created, href)
+                SougouNewsInfo.objects.create(title=title, href=href, source=source_from, created=created)
                 content += f"{index} <a href='{href}'>{title}</a> <br>{source_from} {created} <br> <br>"
                 html_data = {}
                 html_data['index'] = index
