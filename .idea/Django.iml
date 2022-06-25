@@ -14,6 +14,11 @@
   </component>
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/infos" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/infos/app01" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/infos/app01/static" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/infos/app01/templates" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/infos/utils" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/t1" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />

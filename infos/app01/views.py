@@ -43,7 +43,7 @@ def orm(request):
     # 测试ORM操作表中的数据 2011-11-11  datetime.datetime.now()
 
     # #### 1.新建 ####
-    SougouNewsInfo.objects.create(title='百度', href='http://www.baidu.com', source='小小', created='2022/6/6')
+    # SougouNewsInfo.objects.create(title='百度', href='http://www.baidu.com', source='小小', created='2022/6/6')
     # Department.objects.create(title="销售部")
     # Department.objects.create(title="IT部")
     # Department.objects.create(title="运营部")
@@ -73,5 +73,11 @@ def orm(request):
     # UserInfo.objects.all().update(password=999)
     # UserInfo.objects.filter(id=2).update(age=999)
     # UserInfo.objects.filter(name="朱虎飞").update(age=999)
-
+    from app01 import models
+    q = models.SougouNewsInfo.objects.filter(title__contains="蔡")
+    q = models.SougouNewsInfo.objects.filter(title__contains='小米')[1:5]
+    # q = models.SougouNewsInfo.objects.all()[5:15]
+    # q = models.SougouNewsInfo.objects.filter(id=43)
+    for i in q:
+        print(i.title)
     return HttpResponse("成功")
