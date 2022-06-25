@@ -6,6 +6,8 @@ import json
 =======
 import time
 import random
+
+from app01.models import SougouNewsInfo
 # from s_email import send_email
 >>>>>>> origin/main
 
@@ -73,7 +75,11 @@ def sougou(key_words, page=1):
                     source_from = ' '
                     created = ' '
                 print(index, title, source_from, created, href)
+<<<<<<< HEAD
 >>>>>>> origin/main
+=======
+                SougouNewsInfo.objects.create(title=title, href=href, source=source_from, created=created)
+>>>>>>> 70cea8acbcbbfe1b272e4ef0d24ca78bf7aebfab
                 content += f"{index} <a href='{href}'>{title}</a> <br>{source_from} {created} <br> <br>"
                 html_data = {}
                 html_data['index'] = index
