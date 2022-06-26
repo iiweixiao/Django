@@ -1,8 +1,34 @@
 from django.shortcuts import render, HttpResponse
 from app01.models import SougouNewsInfo
+from django.forms import ModelForm
 
 from utils.sougou import sougou
 from utils.s_email import send_email
+from utils.pagination import Pagination
+
+
+class MyForm(ModelForm):
+    class Meta:
+        model = SougouNewsInfo
+        fields = ['title', 'href', 'source', 'created']
+
+
+def data_list(request):
+    # if request.method == 'GET':
+    #     form = MyForm()
+    #     return render(request, 'data_list.html', {'form': form})
+
+    # 1.根据自己的情况去筛选自己的数据
+    queryset = SougouNewsInfo.objects.all()
+
+    # 2.实例化分页对象
+    page_object = Pagination(request, queryset)
+
+    context = {
+        "queryset": page_object.page_queryset,  # 分完页的数据
+        "page_string": page_object.html()  # 生成页码
+    }
+    return render(request, 'data_list.html', context)
 
 
 def index(request):

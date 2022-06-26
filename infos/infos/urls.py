@@ -22,4 +22,5 @@ urlpatterns = [
     # path('admin/', admin.site.urls),
     path('index/', views.index),
     path('orm/', views.orm),  # 测试orm
+    path('list/', views.data_list),  # 测试orm
 ]

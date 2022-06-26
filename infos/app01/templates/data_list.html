@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1/css/bootstrap.css' %}">
+</head>
+<body>
+<div>
+    <div>
+        <form method="post">
+            {% for field in form %}
+                {{ field }}
+            {% endfor %}
+            <!-- <input type="text"  placeholder="姓名" name="user" /> -->
+        </form>
+    </div>
+
+
+    <div>
+        <table class="table table-bordered" style="margin-top: 20px;">
+            <thead>
+            <tr>
+                <th>索引</th>
+                <th>标题</th>
+                <th>来源</th>
+                <th>创建时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for obj in queryset %}
+                <tr>
+                    <td>{{ obj.id }}</td>
+                    <td><a href="{{ obj.href }}">{{ obj.title }}</a></td>
+                    <td>{{ obj.source }}</td>
+                    <td>{{ obj.created }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <ul class="pagination">
+        {{ page_string }}
+    </ul>
+</div>
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1/js/bootstrap.js' %}"></script>
+</div>
+</body>
+</html>
